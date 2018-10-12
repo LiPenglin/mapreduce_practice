@@ -13,12 +13,8 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.StringUtils;
 
 import java.io.IOException;
-import java.util.Map;
-import java.util.TreeMap;
 
-import static java.util.Map.*;
-
-public class FlowSumSortedCache {
+public class FlowSumPartition {
 
 
     public static class FlowSumMapper extends
@@ -46,23 +42,14 @@ public class FlowSumSortedCache {
     public static class FlowSumReducer extends
             Reducer<Text, Flow, Text, Flow> {
 
-        TreeMap<Flow, Text> cache = new TreeMap<>();
+        Flow flow = new Flow();
         protected void reduce(Text phoneNumber, Iterable<Flow> FlowList, Context context) {
-            Flow flow = new Flow();
-            Text currentPhoneNumber = new Text(phoneNumber);
-            FlowList.forEach(flow::add);
-            cache.put(flow, currentPhoneNumber);
-        }
-
-        @Override
-        protected void cleanup(Context context) {
-            for (Entry<Flow, Text> entry : cache.entrySet()) {
-                try {
-                    System.out.println(entry.getValue());
-                    context.write(entry.getValue(), entry.getKey()) ;
-                } catch (IOException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+            flow.set();
+            FlowList.forEach(f -> flow.add(f));
+            try {
+                context.write(phoneNumber, flow);
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -74,16 +61,23 @@ public class FlowSumSortedCache {
 
         Job job = Job.getInstance(conf);
 
-        job.setJarByClass(FlowSumSortedCache.class);
+        job.setJarByClass(FlowSumPartition.class);
         job.setMapperClass(FlowSumMapper.class);
         job.setReducerClass(FlowSumReducer.class);
+
+        job.setPartitionerClass(FlowPartitioner.class);
+        job.setNumReduceTasks(6); // province table size + 1
 
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Flow.class);
 
         FileInputFormat.setInputPaths(job, new Path("e:/flow/input"));
-
-        FileOutputFormat.setOutputPath(job, new Path("e:/flow/output"));
+        Path outputDir = new Path("e:/flow/output_partition");
+        FileSystem fs = FileSystem.get(conf);
+        if (fs.exists(outputDir)) {
+            fs.delete(outputDir, true);
+        }
+        FileOutputFormat.setOutputPath(job, outputDir);
 
         System.exit(job.waitForCompletion(true)? 0: 1);
     }
