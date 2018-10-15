@@ -66,6 +66,11 @@ public class FlowSumPartition {
         job.setReducerClass(FlowSumReducer.class);
 
         job.setPartitionerClass(FlowPartitioner.class);
+        /*
+         如果reduce task 数量为1 partition 无效
+         如果reduce task 数量小于分区个数 illegal partition exception
+         如果reduce task 数量大于分区个数 会有空的output part 文件
+          */
         job.setNumReduceTasks(6); // province table size + 1
 
         job.setOutputKeyClass(Text.class);
