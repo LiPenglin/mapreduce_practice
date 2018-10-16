@@ -1,5 +1,6 @@
 package log;
 
+import common.DateUtil;
 import org.apache.hadoop.io.WritableComparable;
 
 import java.io.DataInput;
