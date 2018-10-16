@@ -1,4 +1,4 @@
-package logJoinByReducer.mr;
+package logJoinByReducer.main;
 
 import logJoinByReducer.components.State;
 import logJoinByReducer.bean.Record;

@@ -113,7 +113,7 @@ public class Record implements Writable, Cloneable {
     }
 
     @Override
-    protected Object clone() {
+    public Object clone() {
         try {
             Record clone = (Record) super.clone();
             clone.setAccessTime((Date) accessTime.clone());

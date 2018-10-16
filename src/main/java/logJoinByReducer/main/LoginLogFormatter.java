@@ -1,4 +1,4 @@
-package logJoinByReducer.mr;
+package logJoinByReducer.main;
 
 import common.DateUtil;
 import org.apache.hadoop.conf.Configuration;

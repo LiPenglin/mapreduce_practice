@@ -1,4 +1,4 @@
-package logJoinByReducer.mr;
+package logJoinByReducer.main;
 
 import logJoinByReducer.bean.Url;
 import logJoinByReducer.components.AllToOneGroupingComparator;

@@ -1,4 +1,4 @@
-package logJoinByReducer.mr;
+package logJoinByReducer.main;
 
 import logJoinByReducer.bean.User;
 import org.apache.hadoop.conf.Configuration;
