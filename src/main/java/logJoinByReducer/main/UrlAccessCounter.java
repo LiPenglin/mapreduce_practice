@@ -69,9 +69,9 @@ public class UrlAccessCounter {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(User.class);
 
-        String inputPath = "e:/tmp/logJoinByMapper/url_access_counter_input";
+        String inputPath = "e:/tmp/log/url_access_counter_input";
         FileInputFormat.setInputPaths(job, new Path(inputPath));
-        String outputPath = "e:/tmp/logJoinByMapper/url_access_counter_output";
+        String outputPath = "e:/tmp/log/url_access_counter_output";
         Path outputDir = new Path(outputPath);
         FileSystem fs = FileSystem.get(conf);
         if (fs.exists(outputDir)) {
