@@ -142,3 +142,89 @@ Reduce Task端可以自定义`GroupingComparator Class extends WritableComparato
 ### Reduce
 
 1. 数据倾斜时，根据业务思考解决方法，尽量从业务层面优化partition。对于全局汇总业务，尽量一个Reduce Task。
+
+## mapreduce 数据压缩
+
+### 概述
+
+数据压缩是mapreduce 的一种优化策略，通过压缩编码`gzip bzip2 等`对mapper 或者 reducer 的输出结果进行压缩，减少网络IO带宽消耗和输出的数据体积，提高MR 程序的运行效率，但是同时也增加了CPU 的计算压力。
+
+### 使用原则
+
+1. 运算密集型JOB，较少使用压缩
+2. IO密集型JOB，可以使用压缩
+
+### 使用方法
+
+#### mapper 输出
+
+1. 
+
+    mapreduce.map.output.compress=false
+    mapreduce.map.output.compress.codec=org.apache.hadoop.io.compress.DefaultCodec
+
+2. 
+
+    conf.setBoolean(Job.MAP_OUTPUT_COMPRESS, true);
+    conf.setClass(Job.MAP_OUTPUT_COMPRESS_CODEC, GzipCodec.class, CompressionCodec.class);
+
+#### reducer 输出
+
+1. 
+
+    mapreduce.output.fileoutputformat.compress=false
+    mapreduce.output.fileoutputformat.compress.codec=org.apache.hadoop.io.compress.DefaultCodec
+    mapreduce.output.fileoutputformat.compress.type=RECORD
+
+2. 
+
+    FileOutputFormat.setCompressOutput(job, true);
+    FileOutputFormat.setOutputCompressorClass(job, (Class<? extends CompressionCodec>) Class.forName(""));
+
+#### 读取
+
+Hadoop自带的InputFormat类内置支持压缩文件的读取，在其initialize 方法中会先根据文件后缀名判断相应的codec，然后判断是否属于可切片压缩编码类型`SplittableCompressionCodec`,如果是则创建一个`CompressedSplitLineReader` 读取数据，如果不是可切片压缩编码类型或者压根就不是压缩文件则创建`SplitLineReader`读取数据。
+
+## 计数器应用
+
+### 概述
+
+计数器可以用来记录JOB 执行进度和状态，通常我们可以在某个程序中插入一个计数器,用来记录程序执行状态等,比日志更加便于我们分析程序。
+
+### 使用方法
+
+    public class MultiOutputs {
+        //通过枚举形式定义自定义计数器
+        enum MyCounter{MALFORORMED,NORMAL}
+
+        static class CommaMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
+
+            @Override
+            protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+
+                String[] words = value.toString().split(",");
+
+                for (String word : words) {
+                    context.write(new Text(word), new LongWritable(1));
+                }
+                //对枚举定义的自定义计数器加1
+                context.getCounter(MyCounter.MALFORORMED).increment(1);
+                //通过动态设置自定义计数器加1
+                context.getCounter("counterGroupa", "countera").increment(1);
+            }
+        }
+    }
+
+## Mapreduce 的DistributedCache
+
+[参考 Log-URL-Access-Sum-TopN](https://github.com/LiPenglin/mapreduce_practice/tree/master/src/main/java/log)
+
+
+
+
+
+
+
+
+
+
