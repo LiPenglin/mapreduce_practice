@@ -1,19 +1,13 @@
-package log;
+package logJoinByMapper.components;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
+import logJoinByMapper.bean.Url;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.StringUtils;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
@@ -95,36 +89,6 @@ public class Top10 {
                 }
             }
         }
-    }
-
-    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException, URISyntaxException {
-        System.setProperty("hadoop.home.dir", "C:\\hadoop-2.6.0");
-
-        Configuration conf = new Configuration();
-        conf.set("fs.defaultFS", "hdfs://192.168.1.10:8020");
-
-        Job job = Job.getInstance(conf);
-
-        job.setJarByClass(Top10.class);
-        job.setMapperClass(Top10Mapper.class);
-        job.setReducerClass(Top10Reducer.class);
-
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(Text.class);
-
-//        String inputPath = "e:/tmp/log/input_top10";
-        String inputPath = "/log/input_top10/";
-        FileInputFormat.setInputPaths(job, new Path(inputPath));
-//        String outputPath = "e:/tmp/log/output_top10";
-        String outputPath = "/log/output_top10/";
-        Path outputDir = new Path(outputPath);
-        FileSystem fs = FileSystem.get(conf);
-        if (fs.exists(outputDir)) {
-            fs.delete(outputDir, true);
-        }
-        FileOutputFormat.setOutputPath(job, outputDir);
-
-        System.exit(job.waitForCompletion(true)? 0: 1);
     }
 
 }

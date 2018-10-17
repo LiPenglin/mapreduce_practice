@@ -217,7 +217,11 @@ Hadoop自带的InputFormat类内置支持压缩文件的读取，在其initializ
 
 ## Mapreduce 的DistributedCache
 
-[参考 Log-URL-Access-Sum-TopN](https://github.com/LiPenglin/mapreduce_practice/tree/master/src/main/java/log)
+[参考 LogJoinByMapper](https://github.com/LiPenglin/mapreduce_practice/tree/master/src/main/java/logJoinByMapper)
+
+## 多Job 串联
+[参考 LogJoinByMapper](https://github.com/LiPenglin/mapreduce_practice/tree/master/src/main/java/logJoinByMapper)
+
 
 
 

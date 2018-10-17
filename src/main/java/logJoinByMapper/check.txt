@@ -1,0 +1,34 @@
+
+ lpl@master  /home/lpl/logs   hadoop fs -mkdir -p /logJoinByMapper/input                                               14:41:13
+
+ lpl@master  /home/lpl/logs   hadoop fs -put visit.logJoinByMapper /logJoinByMapper/input/                                         14:42:03
+
+ lpl@master  /home/lpl/logs   hadoop fs -mkdir -p /logJoinByMapper/cache/                                              14:42:26
+
+ lpl@master  /home/lpl/logs   hadoop fs -put login.logJoinByMapper /logJoinByMapper/cache/                                         14:42:59
+
+ lpl@master  /home/lpl/logs   hadoop fs -cat /logJoinByMapper/output/part-r-00000                                      14:43:26
+url1    tom,192.168.1.11,2017-11-20 10:00,2017-11-20 11:00
+url1    sua,192.168.1.16,2017-11-20 11:00,2017-11-20 12:00
+url1    jer,192.168.1.15,2017-11-20 10:00,2017-11-20 10:40
+url1    lala,192.168.1.11,2017-11-20 11:01,2017-11-20 11:30
+url1    sua,192.168.1.12,2017-11-20 10:01,2017-11-20 10:30
+url1    tom,192.168.1.11,2017-11-20 10:00,2017-11-20 11:00
+url1    tom,192.168.1.14,2017-11-20 11:01,2017-11-20 11:40
+url2    tom,192.168.1.11,2017-11-20 10:00,2017-11-20 11:00
+url2    sua,192.168.1.16,2017-11-20 11:00,2017-11-20 12:00
+url2    jer,192.168.1.15,2017-11-20 10:00,2017-11-20 10:40
+url2    sua,192.168.1.12,2017-11-20 10:01,2017-11-20 10:30
+url2    tom,192.168.1.14,2017-11-20 11:01,2017-11-20 11:40
+url3    sua,192.168.1.12,2017-11-20 10:01,2017-11-20 10:30
+url3    jer,192.168.1.15,2017-11-20 10:00,2017-11-20 10:40
+url3    sua,192.168.1.16,2017-11-20 11:00,2017-11-20 12:00
+
+ lpl@master  /home/lpl/logs   hadoop fs -mkdir /logJoinByMapper/input_top10/                                           14:52:16
+
+ lpl@master  /home/lpl/logs   hadoop fs -mv /logJoinByMapper/output/part-r-00000 /logJoinByMapper/input_top10/join.logJoinByMapper             14:52:53
+
+ lpl@master  /home/lpl/logs   hadoop fs -cat /logJoinByMapper/output_top10/part-r-00000                                14:54:42
+url1    6
+url2    5
+url3    3

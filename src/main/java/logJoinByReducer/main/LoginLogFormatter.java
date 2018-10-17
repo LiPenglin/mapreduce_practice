@@ -86,9 +86,9 @@ public class LoginLogFormatter {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
 
-        String inputPath = "e:/tmp/log/login_log_formatter_input";
+        String inputPath = "e:/tmp/logJoinByMapper/login_log_formatter_input";
         FileInputFormat.setInputPaths(job, new Path(inputPath));
-        String outputPath = "e:/tmp/log/login_log_formatter_output";
+        String outputPath = "e:/tmp/logJoinByMapper/login_log_formatter_output";
         Path outputDir = new Path(outputPath);
         FileSystem fs = FileSystem.get(conf);
         if (fs.exists(outputDir)) {

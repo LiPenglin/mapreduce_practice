@@ -80,9 +80,9 @@ public class TopN {
 
         job.setNumReduceTasks(1); // overall
 
-        String inputPath = "e:/tmp/log/top_n_input";
+        String inputPath = "e:/tmp/logJoinByMapper/top_n_input";
         FileInputFormat.setInputPaths(job, new Path(inputPath));
-        String outputPath = "e:/tmp/log/top_n_output";
+        String outputPath = "e:/tmp/logJoinByMapper/top_n_output";
         Path outputDir = new Path(outputPath);
         FileSystem fs = FileSystem.get(conf);
         if (fs.exists(outputDir)) {

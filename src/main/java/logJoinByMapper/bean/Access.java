@@ -1,4 +1,4 @@
-package log;
+package logJoinByMapper.bean;
 
 import common.DateUtil;
 import org.apache.hadoop.io.WritableComparable;

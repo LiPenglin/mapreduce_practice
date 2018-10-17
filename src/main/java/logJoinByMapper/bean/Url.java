@@ -1,4 +1,4 @@
-package log;
+package logJoinByMapper.bean;
 
 public class Url implements Comparable<Url>{
     private String url;

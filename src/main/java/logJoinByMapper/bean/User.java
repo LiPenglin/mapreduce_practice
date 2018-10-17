@@ -1,6 +1,7 @@
-package log;
+package logJoinByMapper.bean;
 
 import common.DateUtil;
+import logJoinByMapper.bean.Access;
 import org.apache.hadoop.io.Writable;
 
 import java.io.DataInput;

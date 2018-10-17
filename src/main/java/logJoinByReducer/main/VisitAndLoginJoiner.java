@@ -102,9 +102,9 @@ public class VisitAndLoginJoiner {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Record.class);
 
-        String inputPath = "e:/tmp/log/visit_and_login_joiner_input";
+        String inputPath = "e:/tmp/logJoinByMapper/visit_and_login_joiner_input";
         FileInputFormat.setInputPaths(job, new Path(inputPath));
-        String outputPath = "e:/tmp/log/visit_and_login_joiner_output";
+        String outputPath = "e:/tmp/logJoinByMapper/visit_and_login_joiner_output";
         Path outputDir = new Path(outputPath);
         FileSystem fs = FileSystem.get(conf);
         if (fs.exists(outputDir)) {
