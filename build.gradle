@@ -25,3 +25,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-mapreduce-client-core
     compile group: 'org.apache.hadoop', name: 'hadoop-mapreduce-client-core', version: '2.6.0'
 }
+
+test {
+    useJUnit()
+}
